@@ -9,7 +9,12 @@ class Task:
 
 # Function to display all tasks
 def view_all_tasks():
-
+    if not tasks:
+        print("No tasks to display.")
+    else:       
+        print("Current tasks:")
+for i, task in enumerate(tasks):
+    print(f"{i+1}. {task}")
 # Function to add a new task
 def add_task():
     task_name = input("Enter the name of the new task: ")
@@ -19,12 +24,30 @@ def add_task():
 
 # Function to filter tasks by completion status
 def filter_tasks(status):
-
+    if status == 'completed':
+        filtered_tasks = [task for task in tasks if task.completed]
+    elif status == 'incomplete':
+        filtered_tasks = [task for task in tasks if not task.completed]
+    else:
+        print("Invalid status. Please use 'completed' or 'incomplete'.")
+        return
+    print(f"Filtered tasks ({status}):")
+    for task in filtered_tasks:
+        print(task)
 
 # Function to edit an existing task
 def edit_task():
     view_all_tasks()
-
+    try:
+        task_index = int(input("Enter the task number to edit: ")) - 1
+        if task_index < 0 or task_index >= len(tasks):
+            print("Invalid task number.")
+            return
+        new_name = input("Enter the new task name: ")
+        tasks[task_index].name = new_name
+        print(f"Task updated to '{new_name}'.")
+    except ValueError:
+        print("Invalid input. Please enter a valid task number.")
 
 # Function to mark a task as completed
 def mark_task_complete():
