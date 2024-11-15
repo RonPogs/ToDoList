@@ -5,7 +5,9 @@ tasks = []
 
 # Task structure could be a dictionary, or a custom class if you need more features.
 class Task:
-
+    def __init__(self, name, completed=False):
+        self.name = name
+        self.completed = completed
 
 # Function to display all tasks
 def view_all_tasks():
@@ -29,11 +31,30 @@ def edit_task():
 # Function to mark a task as completed
 def mark_task_complete():
     view_all_tasks()
+    try:
+        task_index = int(input("Enter the task number to mark as complete: ")) - 1
+        if task_index < 0 or task_index >= len(tasks):
+            print("Invalid task number.")
+            return
+        tasks[task_index].completed = True
+        print(f"Task '{tasks[task_index].name}' marked as complete.")
+    except ValueError:
+        print("Invalid input. Please enter a valid task number.")
+
 
 
 # Function to delete a task
 def delete_task():
     view_all_tasks()
+    try:
+        task_index = int(input("Enter the task number to delete: ")) - 1
+        if task_index < 0 or task_index >= len(tasks):
+            print("Invalid task number.")
+            return
+        deleted_task = tasks.pop(task_index)
+        print(f"Task '{deleted_task.name}' deleted.")
+    except ValueError:
+        print("Invalid input. Please enter a valid task number.")
 
 
 # Function to quit the program
